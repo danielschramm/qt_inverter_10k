@@ -1,0 +1,11 @@
+{
+    "mqttServerName" : "192.168.1.10",
+    "mqttServerPort" : 1883,
+    "mqttServerUser" : "username",
+    "mqttServerPass" : "password",
+
+    "serialServerName" : "192.168.1.12",
+    "serialServerPort" : 23,
+
+    "waittime" : 10000
+}

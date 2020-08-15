@@ -44,6 +44,9 @@ public:
     }
 
     bool checkResponse(QByteArray &response) {
+        if(response.size() < 5) {
+            return(0);
+        }
         uint16_t crcTrans=0;
         crcTrans|=response[response.size()-3]&0xff;
         crcTrans<<=8;

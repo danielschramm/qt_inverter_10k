@@ -18,3 +18,6 @@ Commands to the inverter are currently not scope of the project but pull request
 For the mqtt connection the qmqtt library has to be manually added to the QT community edition.
 
 The code runs from console and does not use any platform specific code so it should work on every platform supported by QT.
+
+Edit config.json to match your local network settings and copy it to the same folder containing the executeable. 
+(Currently no command line parameter to set the config file path is implemented)

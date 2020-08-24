@@ -1,0 +1,4 @@
+#ifndef P18_TOTAL_ENERGY_H
+#define P18_TOTAL_ENERGY_H
+
+#endif // P18_TOTAL_ENERGY_H

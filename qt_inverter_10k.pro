@@ -43,7 +43,12 @@ HEADERS += \
     crc.h \
     icmdquery.h \
     maininverter.h \
+    p18_query_energy_month.h \
+    p18_query_energy_year.h \
+    p18_query_general_status.h \
+    p18_query_total_energy.h \
     tcpread.h
 
 DISTFILES += \
+    README.md \
     config.json

@@ -35,7 +35,7 @@ public:
     }
 
     virtual QByteArray getTopic() {
-        return("qtInverter10k/PowerStatus");
+        return("/PowerStatus");
     }
 
     virtual QByteArray resultToJson(QByteArray response) {

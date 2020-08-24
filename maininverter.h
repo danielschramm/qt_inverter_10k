@@ -24,7 +24,7 @@ public:
 
     void init(ConfigOptions &configOptions) {
         m_client = new QMqttClient(this);
-        m_client->setClientId("qt_inverter_10k");
+        m_client->setClientId(configOptions.mqttTopic);
         m_client->setHostname(configOptions.mqttServerName);
         m_client->setPort(configOptions.mqttServerPort);
         m_client->setUsername(configOptions.mqttServerUser);

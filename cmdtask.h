@@ -1,6 +1,7 @@
 #ifndef CMDTASK_H
 #define CMDTASK_H
 
+#include <Qt>
 #include <QDebug>
 #include <QObject>
 #include <QtMqtt/QtMqtt>
@@ -15,6 +16,10 @@
 #include "cmdquery_power_status.h"
 #include "cmdquery_general_status.h"
 #include "cmdquery_eminfo.h"
+#include "p18_query_general_status.h"
+#include "p18_query_total_energy.h"
+#include "p18_query_energy_year.h"
+#include "p18_query_energy_month.h"
 
 #include "configfile.h"
 
@@ -34,6 +39,26 @@ public:
         //cmdTimer->start(15000);
         cmdTimer->start(configOptions.waittime);
 
+        baseTopic=configOptions.mqttTopic;
+        if(QString::compare(configOptions.protocol,"p18", Qt::CaseInsensitive) == 0) {
+            p18protocol=true;
+        } else {
+            p18protocol=false;
+        }
+
+        if(p18protocol) {
+            cmdList.append(new P18QueryGeneralStatus);
+            cmdList.append(new P18QueryTotalEnergy);
+            cmdList.append(new P18QueryEnergyYear);
+            cmdList.append(new P18QueryEnergyMonth);
+        } else {
+            cmdList.append(new CmdQueryTotalEnergy);
+            cmdList.append(new CmdQueryEnergyYear);
+            cmdList.append(new CmdQueryPowerStatus);
+            cmdList.append(new CmdQueryGeneralStatus);
+            cmdList.append(new CmdQueryEmInfo);
+        }
+
     }
 
 public slots:
@@ -43,7 +68,8 @@ public slots:
             currentListIndex=0;
         }
 
-        QByteArray topic = cmdList.at(currentListIndex)->getTopic();
+        QByteArray topic = baseTopic.toUtf8();
+        topic.append(cmdList.at(currentListIndex)->getTopic());
         QByteArray payload = cmdList.at(currentListIndex)->resultToJson(
                     tcpRead->executeCommand(
                         cmdList.at(currentListIndex)->getCmd().constData())
@@ -64,6 +90,9 @@ protected:
     QList<iCmdQuery *> cmdList;
     int currentListIndex=0;
 
+    bool p18protocol=false;
+
+    QString baseTopic="";
 };
 
 #endif // CMDTASK_H

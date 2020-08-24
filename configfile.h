@@ -1,6 +1,7 @@
 #ifndef CONFIGFILE_H
 #define CONFIGFILE_H
 
+#include <Qt>
 #include <QObject>
 #include <QString>
 #include <QJsonDocument>
@@ -14,6 +15,8 @@ public:
     int mqttServerPort=1883;
     QString mqttServerPass="";
     QString mqttServerUser="";
+    QString mqttTopic="";
+    QString protocol="";
 
     QString serialServerName="";
     int serialServerPort=23;
@@ -25,16 +28,20 @@ public:
 
 class ConfigFile
 {
+private:
+    QString configFileName="config.json";
 public:
 
     ConfigOptions configOptions;
 
-    ConfigFile() {
-
+    ConfigFile(QString &newConfigFileName) {
+        if(newConfigFileName.size()>0) {
+            configFileName=newConfigFileName;
+        }
     }
 
     void init() {
-        QFile loadFile(QStringLiteral("config.json"));
+        QFile loadFile(configFileName);
 
             if (!loadFile.open(QIODevice::ReadOnly)) {
                 qWarning("Couldn't open config.json file.");
@@ -55,6 +62,8 @@ public:
             configOptions.mqttServerPort = jsonObj["mqttServerPort"].toInt();
             configOptions.mqttServerPass = jsonObj["mqttServerPass"].toString();
             configOptions.mqttServerUser = jsonObj["mqttServerUser"].toString();
+            configOptions.mqttTopic = jsonObj["mqttTopic"].toString();
+            configOptions.protocol = jsonObj["protocol"].toString();
             configOptions.serialServerName = jsonObj["serialServerName"].toString();
             configOptions.serialServerPort = jsonObj["serialServerPort"].toInt();
             configOptions.waittime = jsonObj["waittime"].toInt();

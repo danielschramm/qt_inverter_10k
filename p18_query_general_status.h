@@ -60,9 +60,9 @@ public:
             value = elements.at(1).toLongLong();
             recordObject.insert("grid_frequency", QJsonValue::fromVariant(static_cast<double>(value) / 10.0));
             value = elements.at(2).toLongLong();
-            recordObject.insert("ac_output_voltage", QJsonValue::fromVariant(static_cast<double>(value) / 100.0));
+            recordObject.insert("ac_output_voltage", QJsonValue::fromVariant(static_cast<double>(value) / 10.0));
             value = elements.at(3).toLongLong();
-            recordObject.insert("ac_output_frequency", QJsonValue::fromVariant(static_cast<double>(value) / 100.0));
+            recordObject.insert("ac_output_frequency", QJsonValue::fromVariant(static_cast<double>(value) / 10.0));
             value = elements.at(4).toLongLong();
             recordObject.insert("ac_output_apparent_power", QJsonValue::fromVariant(static_cast<double>(value) / 10.0));
             value = elements.at(5).toLongLong();

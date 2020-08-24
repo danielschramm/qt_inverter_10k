@@ -2,6 +2,8 @@
 #include <QtCore>
 #include <QObject>
 #include <QByteArray>
+#include <QCommandLineParser>
+#include <QCommandLineOption>
 
 
 #include "maininverter.h"
@@ -15,8 +17,24 @@ int main(int argc, char *argv[])
 {
 
     QCoreApplication a(argc, argv);
+    QCoreApplication::setApplicationName("qt_inverter_10k");
+    QCoreApplication::setApplicationVersion("0.1");
 
-    ConfigFile *configFile = new ConfigFile();
+    QCommandLineParser parser;
+    parser.setApplicationDescription("qt_inverter_10k");
+    parser.addHelpOption();
+    parser.addVersionOption();
+
+    QCommandLineOption configFileOption(QStringList() << "c" << "config",
+            QCoreApplication::translate("main", "Specify config file name."),
+            QCoreApplication::translate("main", "directory"));
+    parser.addOption(configFileOption);
+
+     parser.process(a);
+
+    QString configFileName = parser.value(configFileOption);
+
+    ConfigFile *configFile = new ConfigFile(configFileName);
     configFile->init();
 
     MainInverter *mainInverter = new MainInverter(&a);

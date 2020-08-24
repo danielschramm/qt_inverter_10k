@@ -35,7 +35,7 @@ public:
     }
 
     virtual QByteArray getTopic() {
-        return("qtInverter10k/TotalEnergy");
+        return("/TotalEnergy");
     }
 
     virtual QByteArray resultToJson(QByteArray response) {

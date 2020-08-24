@@ -62,6 +62,15 @@ public:
         return (crcTrans == crcCalc);
     }
 
+    void appendCrc(QByteArray &str) {
+        for(int i=0; i<str.size(); i++) {
+            add(str[i]);
+        }
+
+        str.append((getCrc()>>8)&0xff);
+        str.append((getCrc())&0xff);
+    }
+
     uint16_t getCrc() {
         uint8_t bCRCHigh;
         uint8_t bCRCLow;
@@ -89,3 +98,4 @@ public:
 };
 
 #endif // CRC_H
+

@@ -43,7 +43,7 @@ public:
     }
 
     virtual QByteArray getTopic() {
-        return("qtInverter10k/YearlyEnergy");
+        return("/YearlyEnergy");
     }
 
     virtual QByteArray resultToJson(QByteArray response) {

@@ -11,11 +11,11 @@
 #include <QTimer>
 
 #include "tcpread.h"
-#include "cmdquery_total_energy.h"
-#include "cmdquery_energy_year.h"
-#include "cmdquery_power_status.h"
-#include "cmdquery_general_status.h"
-#include "cmdquery_eminfo.h"
+#include "p17_query_total_energy.h"
+#include "p17_query_energy_year.h"
+#include "p17_query_power_status.h"
+#include "p17_query_general_status.h"
+#include "p17_query_eminfo.h"
 #include "p18_query_general_status.h"
 #include "p18_query_total_energy.h"
 #include "p18_query_energy_year.h"

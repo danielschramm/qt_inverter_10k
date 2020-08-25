@@ -33,16 +33,16 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    cmdquery_eminfo.h \
-    cmdquery_energy_year.h \
-    cmdquery_general_status.h \
-    cmdquery_power_status.h \
-    cmdquery_total_energy.h \
     cmdtask.h \
     configfile.h \
     crc.h \
     icmdquery.h \
     maininverter.h \
+    p17_query_eminfo.h \
+    p17_query_energy_year.h \
+    p17_query_general_status.h \
+    p17_query_power_status.h \
+    p17_query_total_energy.h \
     p18_query_energy_month.h \
     p18_query_energy_year.h \
     p18_query_general_status.h \

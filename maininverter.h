@@ -10,7 +10,7 @@
 #include <QTimer>
 
 #include "tcpread.h"
-#include "cmdquery_total_energy.h"
+#include "p17_query_total_energy.h"
 
 #include "configfile.h"
 

@@ -25,6 +25,8 @@ private:
         return result;
     }
 
+
+
 public:
     P18QueryTotalEnergy() {
 

@@ -8,7 +8,7 @@
 #include <QJsonObject>
 #include <icmdquery.h>
 
-class CmdQueryEmInfo : public iCmdQuery
+class P17QueryEmInfo : public iCmdQuery
 {
 private:
     bool isValidFormat(QByteArray response) {
@@ -26,7 +26,7 @@ private:
     }
 
 public:
-    CmdQueryEmInfo() {
+    P17QueryEmInfo() {
 
     }
 

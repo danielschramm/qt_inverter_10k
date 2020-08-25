@@ -8,7 +8,7 @@
 #include <QJsonObject>
 #include <icmdquery.h>
 
-class CmdQueryPowerStatus : public iCmdQuery
+class P17QueryPowerStatus : public iCmdQuery
 {
 private:
     bool isValidFormat(QByteArray response) {
@@ -26,7 +26,7 @@ private:
     }
 
 public:
-    CmdQueryPowerStatus() {
+    P17QueryPowerStatus() {
 
     }
 

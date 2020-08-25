@@ -52,11 +52,11 @@ public:
             cmdList.append(new P18QueryEnergyYear);
             cmdList.append(new P18QueryEnergyMonth);
         } else {
-            cmdList.append(new CmdQueryTotalEnergy);
-            cmdList.append(new CmdQueryEnergyYear);
-            cmdList.append(new CmdQueryPowerStatus);
-            cmdList.append(new CmdQueryGeneralStatus);
-            cmdList.append(new CmdQueryEmInfo);
+            cmdList.append(new P17QueryTotalEnergy);
+            cmdList.append(new P17QueryEnergyYear);
+            cmdList.append(new P17QueryPowerStatus);
+            cmdList.append(new P17QueryGeneralStatus);
+            cmdList.append(new P17QueryEmInfo);
         }
 
     }

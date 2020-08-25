@@ -9,7 +9,7 @@
 #include <icmdquery.h>
 
 
-class CmdQueryGeneralStatus : public iCmdQuery
+class P17QueryGeneralStatus : public iCmdQuery
 {
 private:
     bool isValidFormat(QByteArray response) {
@@ -27,7 +27,7 @@ private:
     }
 
 public:
-    CmdQueryGeneralStatus() {
+    P17QueryGeneralStatus() {
 
     }
 

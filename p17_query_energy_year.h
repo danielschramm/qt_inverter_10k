@@ -8,7 +8,7 @@
 #include <QJsonObject>
 #include <icmdquery.h>
 
-class CmdQueryEnergyYear : public iCmdQuery
+class P17QueryEnergyYear : public iCmdQuery
 {
 private:
     bool isValidFormat(QByteArray response) {
@@ -26,7 +26,7 @@ private:
     }
 
 public:
-    CmdQueryEnergyYear() {
+    P17QueryEnergyYear() {
 
     }
 

@@ -1,5 +1,6 @@
-#ifndef P18_TOTAL_ENERGY_H
-#define P18_TOTAL_ENERGY_H
+#ifndef P18_QUERY_WORKING_MODE_H
+#define P18_QUERY_WORKING_MODE_H
+
 
 #include <QString>
 #include <QByteArray>
@@ -7,10 +8,10 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <icmdquery.h>
-#include "response_longlong.h"
+#include "response_enum.h"
 
 
-class P18QueryTotalEnergy : public iCmdQuery
+class P18QueryWorkingMode : public iCmdQuery
 {
 private:
     bool isValidFormat(QByteArray response) {
@@ -18,7 +19,7 @@ private:
 
         if(! response.endsWith("\r"))
             result=false;
-        if(! response.startsWith("^D011"))
+        if(! response.startsWith("^D005"))
             result=false;
         Crc crc;
         if(! crc.checkResponse(response))
@@ -30,12 +31,20 @@ private:
     QList<iResponse *> responseList;
 
 public:
-    P18QueryTotalEnergy() {
-        responseList.append(new ResposeLongLong("TotalEnergy"));
+    P18QueryWorkingMode() {
+        QMap <int, QString> enumWorkingMode;
+                enumWorkingMode[0]="Power on mode";
+                enumWorkingMode[1]="Standby mode";
+                enumWorkingMode[2]="Bypass mode";
+                enumWorkingMode[3]="Battery mode";
+                enumWorkingMode[4]="Fault mode";
+                enumWorkingMode[5]="Hybrid mode(Line mode, Grid mode)";
+
+        responseList.append(new ResposeEnum("WorkingMode", enumWorkingMode));
     }
 
     virtual QByteArray getCmd() {
-        QByteArray cmd="^P005ET";
+        QByteArray cmd="^P006MOD";
         Crc crc;
         crc.appendCrc(cmd);
         cmd.append('\r');
@@ -44,7 +53,7 @@ public:
     }
 
     virtual QByteArray getTopic() {
-        return("/TotalEnergy");
+        return("/WorkingMode");
     }
 
     virtual QByteArray resultToJson(QByteArray response) {
@@ -75,5 +84,4 @@ public:
 
 };
 
-
-#endif // P18_TOTAL_ENERGY_H
+#endif // P18_QUERY_WORKING_MODE_H

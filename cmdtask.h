@@ -20,6 +20,7 @@
 #include "p18_query_total_energy.h"
 #include "p18_query_energy_year.h"
 #include "p18_query_energy_month.h"
+#include "p18_query_working_mode.h"
 
 #include "configfile.h"
 
@@ -51,6 +52,7 @@ public:
             cmdList.append(new P18QueryTotalEnergy);
             cmdList.append(new P18QueryEnergyYear);
             cmdList.append(new P18QueryEnergyMonth);
+            cmdList.append(new P18QueryWorkingMode);
         } else {
             cmdList.append(new P17QueryTotalEnergy);
             cmdList.append(new P17QueryEnergyYear);

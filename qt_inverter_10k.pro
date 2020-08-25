@@ -36,6 +36,7 @@ HEADERS += \
     cmdtask.h \
     configfile.h \
     crc.h \
+    iResponse.h \
     icmdquery.h \
     maininverter.h \
     p17_query_eminfo.h \
@@ -47,6 +48,9 @@ HEADERS += \
     p18_query_energy_year.h \
     p18_query_general_status.h \
     p18_query_total_energy.h \
+    p18_query_working_mode.h \
+    response_enum.h \
+    response_longlong.h \
     tcpread.h
 
 DISTFILES += \

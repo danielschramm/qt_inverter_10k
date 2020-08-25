@@ -25,6 +25,20 @@ private:
         return result;
     }
 
+    QString genChecksum(QByteArray data) {
+        unsigned int sum=0;
+        for(int i=0; i<data.size(); i++) {
+            sum += data[i];
+        }
+        sum &= 0xff;
+
+        QString checksum;
+        checksum = QString::number(sum).rightJustified(3, '0');
+        return checksum;
+    }
+
+
+
 public:
     P17QueryEnergyYear() {
 

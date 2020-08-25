@@ -33,12 +33,12 @@ private:
 public:
     P18QueryWorkingMode() {
         QMap <int, QString> enumWorkingMode;
-                enumWorkingMode[0]="Power on mode";
-                enumWorkingMode[1]="Standby mode";
-                enumWorkingMode[2]="Bypass mode";
-                enumWorkingMode[3]="Battery mode";
-                enumWorkingMode[4]="Fault mode";
-                enumWorkingMode[5]="Hybrid mode(Line mode, Grid mode)";
+        enumWorkingMode[0]="Power on mode";
+        enumWorkingMode[1]="Standby mode";
+        enumWorkingMode[2]="Bypass mode";
+        enumWorkingMode[3]="Battery mode";
+        enumWorkingMode[4]="Fault mode";
+        enumWorkingMode[5]="Hybrid mode(Line mode, Grid mode)";
 
         responseList.append(new ResposeEnum("WorkingMode", enumWorkingMode));
     }

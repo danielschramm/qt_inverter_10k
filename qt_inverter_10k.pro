@@ -46,9 +46,10 @@ HEADERS += \
     p17_query_total_energy.h \
     p18_query_energy_month.h \
     p18_query_energy_year.h \
-    p18_query_general_status.h \
+    p18_query_general_status_list.h \
     p18_query_total_energy.h \
     p18_query_working_mode.h \
+    response_double.h \
     response_enum.h \
     response_longlong.h \
     tcpread.h

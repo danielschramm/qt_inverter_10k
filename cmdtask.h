@@ -16,7 +16,7 @@
 #include "p17_query_power_status.h"
 #include "p17_query_general_status.h"
 #include "p17_query_eminfo.h"
-#include "p18_query_general_status.h"
+#include "p18_query_general_status_list.h"
 #include "p18_query_total_energy.h"
 #include "p18_query_energy_year.h"
 #include "p18_query_energy_month.h"

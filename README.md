@@ -19,6 +19,7 @@ Currently the following P18 commands are implemented:
 - ^P005ET (Total Energy generated)
 - ^P009EY (Yearly Energy generated)
 - ^P011EM (Monthly Energy generated)
+- ^P006MOD^(Working Mode)
 
 Commands to the inverter are currently not scope of the project but pull requests including this are highly welcome.
 

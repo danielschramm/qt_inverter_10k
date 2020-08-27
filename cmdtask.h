@@ -74,7 +74,7 @@ public slots:
                         cmdList.at(currentListIndex)->getCmd().constData())
                     );
 
-        emit sReceivedData(cmdList.at(currentListIndex)->getStateTopic().toUtf8(), payload);
+        emit sMqttMessage(cmdList.at(currentListIndex)->getStateTopic().toUtf8(), payload, 0, false);
     }
 
     void onMqttConnect() {
@@ -82,13 +82,13 @@ public slots:
             foreach(auto r, c->getResponseList()) {
 //                qDebug() << r->getAutodetectTopic();
 //                qDebug() << r->getAutodetectPalyoad(c->getStateTopic());
-                emit sReceivedData(r->getAutodetectTopic().toUtf8(),  r->getAutodetectPalyoad(c->getStateTopic()));
+                emit sMqttMessage(r->getAutodetectTopic().toUtf8(),  r->getAutodetectPalyoad(c->getStateTopic()), 0, true);
             }
         }
     }
 
 signals:
-    void sReceivedData(const QByteArray &topic, const QByteArray &payload);
+    void sMqttMessage(const QByteArray &topic, const QByteArray &payload, quint8 qos, bool retain);
 
 protected:
     QTimer *cmdTimer;

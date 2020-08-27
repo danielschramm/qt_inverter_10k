@@ -46,8 +46,8 @@ int main(int argc, char *argv[])
 
 
     if(! QObject::connect(
-                cmdTask, SIGNAL(sReceivedData(const QByteArray &, const QByteArray &)),
-                mainInverter, SLOT(onReceivedData(const QByteArray &, const QByteArray &)))) {
+                cmdTask, SIGNAL(sMqttMessage(const QByteArray &, const QByteArray &, quint8, bool)),
+                mainInverter, SLOT(onReceivedData(const QByteArray &, const QByteArray &, quint8, bool)))) {
         qDebug() << "connect failed";
         while(1);
     }

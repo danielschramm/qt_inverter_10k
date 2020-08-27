@@ -71,9 +71,9 @@ public slots:
         }
     }
 
-    void onReceivedData(const QByteArray &topic, const QByteArray &payload) {
+    void onReceivedData(const QByteArray &topic, const QByteArray &payload, quint8 qos, bool retain) {
         if(m_client->state() == QMqttClient::ClientState::Connected) {
-            if(m_client->publish(QString(topic), payload) == -1) {
+            if(m_client->publish(QString(topic), payload, qos, retain) == -1) {
                 qDebug() << "publish error";
             }
         }

@@ -85,9 +85,9 @@ public:
         responseList.append(new ResposeEnum(devName, "dc_ac_power_direction" ,enumDCAC));
 
         QMap <int, QString> enumLine;
-        enumDCAC[0]="donothing";
-        enumDCAC[1]="input";
-        enumDCAC[2]="output";
+        enumLine[0]="donothing";
+        enumLine[1]="input";
+        enumLine[2]="output";
         responseList.append(new ResposeEnum(devName, "line_power_direction", enumLine ));
         responseList.append(new ResposeLongLong(devName, "local_parallel_id" ,""));
     }

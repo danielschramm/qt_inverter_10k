@@ -31,7 +31,7 @@ private:
 
 public:
     P18QueryEnergyMonth(QString devName) : iCmdQuery("MonthlyEnergy", devName) {
-        responseList.append(new ResposeLongLong(devName, "MonthlyEnergy", "kWh"));
+        responseList.append(new ResposeLongLong(devName, "MonthlyEnergy", "Wh"));
     }
 
     virtual QByteArray getCmd() {

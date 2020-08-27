@@ -28,7 +28,7 @@ private:
 
 public:
     P18QueryTotalEnergy(QString devName) : iCmdQuery("TotalEnergy", devName) {
-        responseList.append(new ResposeLongLong(devName, "TotalEnergy", "kWh"));
+        responseList.append(new ResposeLongLong(devName, "TotalEnergy", "Wh"));
     }
 
     virtual QByteArray getCmd() {

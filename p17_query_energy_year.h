@@ -7,6 +7,10 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <icmdquery.h>
+#include <QDate>
+#include <response_double.h>
+#include <response_enum.h>
+#include <response_longlong.h>
 
 class P17QueryEnergyYear : public iCmdQuery
 {
@@ -37,11 +41,9 @@ private:
         return checksum;
     }
 
-
-
 public:
-    P17QueryEnergyYear() {
-
+    P17QueryEnergyYear(QString devName) : iCmdQuery("YearlyEnergy", devName) {
+        responseList.append(new ResposeLongLong(devName, "YearlyEnergy", "kWh"));
     }
 
     virtual QByteArray getCmd() {
@@ -56,20 +58,16 @@ public:
         return(returnval);
     }
 
-    virtual QByteArray getTopic() {
-        return("/YearlyEnergy");
-    }
-
     virtual QByteArray resultToJson(QByteArray response) {
         if(isValidFormat(response)) {
             QByteArray temp = response.right(response.size() - 5);
             temp.truncate(temp.size() - 3);
-            qlonglong energy =  temp.toLongLong();
-            qDebug() << "result: " << energy;
-
+            responseList.at(0)->setValue(temp);
 
             QJsonObject  recordObject;
-            recordObject.insert("YearlyEnergy", QJsonValue::fromVariant(energy));
+            foreach (auto entry, responseList) {
+                recordObject.insert(entry->getJsonKey(), entry->getJsonValue());
+            }
             QJsonDocument doc(recordObject);
             return(doc.toJson());
         } else {
@@ -78,8 +76,6 @@ public:
         }
         return("");
     }
-
-
 };
 
 #endif // CMDQUERYENERGYYEAR_H

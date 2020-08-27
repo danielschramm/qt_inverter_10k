@@ -3,7 +3,7 @@
     "mqttServerPort" : 1883,
     "mqttServerUser" : "username",
     "mqttServerPass" : "password",
-    "mqttTopic" : "pv_ost",
+    "deviceName" : "pv_ost",
 
     "serialServerName" : "192.168.1.11",
     "serialServerPort" : 23,

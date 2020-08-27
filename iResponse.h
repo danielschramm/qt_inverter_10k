@@ -3,12 +3,18 @@
 
 #include <QString>
 #include <QJsonValue>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QRegularExpression>
 
 class iResponse {
+protected:
 public:
     virtual void setValue(QByteArray newValue) = 0;
     virtual QString getJsonKey() = 0;
     virtual QJsonValue getJsonValue() = 0;
+    virtual QString getAutodetectTopic() =0;
+    virtual QByteArray getAutodetectPalyoad(QString stateTopic) =0;
 };
 
 

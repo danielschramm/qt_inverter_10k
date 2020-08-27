@@ -7,6 +7,9 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <icmdquery.h>
+#include <response_double.h>
+#include <response_enum.h>
+#include <response_longlong.h>
 
 class P17QueryEmInfo : public iCmdQuery
 {
@@ -26,18 +29,20 @@ private:
     }
 
 public:
-    P17QueryEmInfo() {
-
+    P17QueryEmInfo(QString devName) : iCmdQuery("EmInfo", devName) {
+        responseList.append(new ResposeDouble(devName, "emInfo_tbd", 1.0, "W"));
+        responseList.append(new ResposeDouble(devName, "emInfo_default_feedin_power", 1.0, "W"));
+        responseList.append(new ResposeDouble(devName, "emInfo_actual_solar_power", 1.0, "W"));
+        responseList.append(new ResposeDouble(devName, "emInfo_actual_feedin_power", 1.0, "W"));
+        responseList.append(new ResposeDouble(devName, "emInfo_actual_reserved_hybrid_power", 1.0, "W"));
+        responseList.append(new ResposeDouble(devName, "emInfo_tbd2", 1.0, "W"));
     }
 
     virtual QByteArray getCmd() {
         return("^P007EMINFO\r");
     }
 
-    virtual QByteArray getTopic() {
-        return("/EmInfo");
-    }
-
+    /*
     virtual QByteArray resultToJson(QByteArray response) {
         if(isValidFormat(response)) {
             QByteArray temp = response.right(response.size() - 5);
@@ -61,6 +66,31 @@ public:
             value = elements.at(5).toLongLong();
             recordObject.insert("tbd2", QJsonValue::fromVariant(value));
 
+            QJsonDocument doc(recordObject);
+            return(doc.toJson());
+        } else {
+            qDebug() << "wrong Format";
+            return("");
+        }
+        return("");
+    }
+*/
+    virtual QByteArray resultToJson(QByteArray response) {
+        if(isValidFormat(response)) {
+            QByteArray temp = response.right(response.size() - 5);
+            temp.truncate(temp.size() - 3);
+
+            QList<QByteArray> elements = temp.split(',');
+
+            int i=0;
+            foreach(auto e, elements) {
+                responseList.at(i++)->setValue(e);
+            }
+
+            QJsonObject  recordObject;
+            foreach (auto entry, responseList) {
+                recordObject.insert(entry->getJsonKey(), entry->getJsonValue());
+            }
             QJsonDocument doc(recordObject);
             return(doc.toJson());
         } else {

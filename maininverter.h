@@ -8,12 +8,9 @@
 #include <QByteArray>
 #include <QMqttTopicName>
 #include <QTimer>
-
 #include "tcpread.h"
 #include "p17_query_total_energy.h"
-
 #include "configfile.h"
-
 
 class MainInverter : public QObject
 {
@@ -24,7 +21,7 @@ public:
 
     void init(ConfigOptions &configOptions) {
         m_client = new QMqttClient(this);
-        m_client->setClientId(configOptions.mqttTopic);
+        m_client->setClientId(configOptions.deviceName);
         m_client->setHostname(configOptions.mqttServerName);
         m_client->setPort(configOptions.mqttServerPort);
         m_client->setUsername(configOptions.mqttServerUser);
@@ -44,15 +41,15 @@ public:
         timer->start(30000);
     }
 
-
 signals:
     void finished();
+    void mqttConnected();
 
 public slots:
-
     void onConnected() {
         qDebug() << "Connected to mqtt broker ";
         statusConnected=true;
+        emit mqttConnected();
     }
 
     void onDisconnected() {
@@ -60,15 +57,15 @@ public slots:
         statusConnected=false;
     }
 
-    void onError()
-    { qDebug() << "onError"; }
+    void onError() {
+        qDebug() << "onError";
+    }
 
-    void onReceived()
-    { qDebug() << "onReceived"; }
-
+    void onReceived() {
+        qDebug() << "onReceived";
+    }
 
     void onTimer() {
-        //        emit finished();
         if( ! statusConnected ) {
             m_client->connectToHost();
         }
@@ -76,21 +73,13 @@ public slots:
 
     void onReceivedData(const QByteArray &topic, const QByteArray &payload) {
         qDebug() << "received data";
-        /*
-        if(topic.size()==0)
-            return;
-        if(payload.size()==0)
-            return;
-        */
         if(m_client->state() == QMqttClient::ClientState::Connected) {
-
             if(m_client->publish(QString(topic), payload) == -1) {
                 qDebug() << "publish error";
             } else {
                 qDebug() << "publish";
             }
         }
-
     }
 
 signals:

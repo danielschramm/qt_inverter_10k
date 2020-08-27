@@ -9,7 +9,6 @@
 #include <icmdquery.h>
 #include "response_longlong.h"
 
-
 class P18QueryTotalEnergy : public iCmdQuery
 {
 private:
@@ -27,11 +26,9 @@ private:
         return result;
     }
 
-    QList<iResponse *> responseList;
-
 public:
-    P18QueryTotalEnergy() {
-        responseList.append(new ResposeLongLong("TotalEnergy"));
+    P18QueryTotalEnergy(QString devName) : iCmdQuery("TotalEnergy", devName) {
+        responseList.append(new ResposeLongLong(devName, "TotalEnergy", "kWh"));
     }
 
     virtual QByteArray getCmd() {
@@ -43,26 +40,16 @@ public:
         return(cmd);
     }
 
-    virtual QByteArray getTopic() {
-        return("/TotalEnergy");
-    }
-
     virtual QByteArray resultToJson(QByteArray response) {
         if(isValidFormat(response)) {
             QByteArray temp = response.right(response.size() - 5);
             temp.truncate(temp.size() - 3);
             responseList.at(0)->setValue(temp);
-            /*
-            qlonglong totalEnergy =  temp.toLongLong();
-            qDebug() << "result: " << totalEnergy;
-            */
 
             QJsonObject  recordObject;
-            //recordObject.insert("TotalEnergy", QJsonValue::fromVariant(totalEnergy));
             foreach (auto entry, responseList) {
                 recordObject.insert(entry->getJsonKey(), entry->getJsonValue());
             }
-
             QJsonDocument doc(recordObject);
             return(doc.toJson());
         } else {
@@ -71,8 +58,6 @@ public:
         }
         return("");
     }
-
-
 };
 
 

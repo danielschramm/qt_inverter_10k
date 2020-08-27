@@ -2,6 +2,8 @@
 
 QT Software to read data from Infini Solar 10kW 3 phase inverters with P17 protocol and some 1 phase interters using P18 protocol.
 
+The mqtt topics are now HomeAssistant compatible and HomeAssistant auto discovery is implemented.
+
 The inverter needs to be connected to a RS232<->Network converter to use this project.
 (Alternative a Serial to Network link can be setup under Linux with netcat, etc)
 Data is published as json objects to a MQTT Server.

@@ -6,11 +6,15 @@
 
 class ResposeEnum :public iResponse {
 private:
-    QString jsonKey;
+    QString devName;
+    QString valueName;
     QMap <int, QString> enumeration;
     int value=0;
 public:
-    ResposeEnum(const QString jsonKey, QMap <int, QString> &enumeration) : jsonKey(jsonKey), enumeration(enumeration) {
+    ResposeEnum(const QString devName, const QString valueName, QMap <int, QString> &enumeration) :
+        devName(devName),
+        valueName(valueName),
+        enumeration(enumeration) {
 
     }
 
@@ -19,13 +23,40 @@ public:
     }
 
     virtual QString getJsonKey() {
-        return jsonKey;
+        return devName + "_" + valueName;
     }
 
     virtual QJsonValue getJsonValue() {
         return enumeration[value];
     }
 
+    virtual QString getAutodetectTopic() {
+        QString returnStr="homeassistant/sensor/" + devName + "/" + getJsonKey() + "/config";
+        returnStr.replace(QRegularExpression("\\s+"), "_");
+        return returnStr;
+    }
+
+    virtual QByteArray getAutodetectPalyoad(QString stateTopic) {
+        QJsonObject  recordObject;
+        recordObject.insert("name",  devName + " " + valueName);
+        recordObject.insert("unique_id", devName + "_" + valueName);
+        recordObject.insert("state_topic", stateTopic);
+        QString valueTemplate="{{ value_json.";
+        valueTemplate.append(getJsonKey());
+        valueTemplate.append("}}");
+        recordObject.insert("value_template", valueTemplate);
+
+        QJsonObject deviceObject;
+        deviceObject.insert("name", devName);
+        deviceObject.insert("identifiers", devName);
+        deviceObject.insert("sw_version", "0.0");
+        deviceObject.insert("model", "Infini Solar");
+        deviceObject.insert("manufacturer", "S/W Daniel Schramm");
+        recordObject.insert("device", deviceObject);
+
+        QJsonDocument doc(recordObject);
+        return(doc.toJson());
+    }
 };
 
 

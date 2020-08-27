@@ -7,6 +7,10 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <icmdquery.h>
+#include <response_double.h>
+#include <response_enum.h>
+#include <response_longlong.h>
+#include <QDate>
 
 class P18QueryEnergyMonth : public iCmdQuery
 {
@@ -26,8 +30,8 @@ private:
     }
 
 public:
-    P18QueryEnergyMonth() {
-
+    P18QueryEnergyMonth(QString devName) : iCmdQuery("MonthlyEnergy", devName) {
+        responseList.append(new ResposeLongLong(devName, "MonthlyEnergy", "kWh"));
     }
 
     virtual QByteArray getCmd() {
@@ -45,23 +49,19 @@ public:
         return(cmd);
     }
 
-    virtual QByteArray getTopic() {
-        return("/MonthlyEnergy");
-    }
-
     virtual QByteArray resultToJson(QByteArray response) {
         if(isValidFormat(response)) {
             QByteArray temp = response.right(response.size() - 5);
             temp.truncate(temp.size() - 3);
-            qlonglong energy =  temp.toLongLong();
-            qDebug() << "result: " << energy;
-
+            responseList.at(0)->setValue(temp);
 
             QJsonObject  recordObject;
-            recordObject.insert("MonthlyEnergy", QJsonValue::fromVariant(energy));
+            foreach (auto entry, responseList) {
+                recordObject.insert(entry->getJsonKey(), entry->getJsonValue());
+            }
             QJsonDocument doc(recordObject);
             return(doc.toJson());
-        } else {
+         } else {
             qDebug() << "wrong Format";
             return("");
         }

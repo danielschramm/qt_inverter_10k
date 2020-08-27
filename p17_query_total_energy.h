@@ -7,6 +7,9 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <icmdquery.h>
+#include <response_double.h>
+#include <response_enum.h>
+#include <response_longlong.h>
 
 class P17QueryTotalEnergy : public iCmdQuery
 {
@@ -26,28 +29,24 @@ private:
     }
 
 public:
-    P17QueryTotalEnergy() {
-
+    P17QueryTotalEnergy(QString devName) : iCmdQuery("TotalEnergy", devName) {
+        responseList.append(new ResposeLongLong(devName, "TotalEnergy", "kWh"));
     }
 
     virtual QByteArray getCmd() {
         return("^P003ET\r");
     }
 
-    virtual QByteArray getTopic() {
-        return("/TotalEnergy");
-    }
-
     virtual QByteArray resultToJson(QByteArray response) {
         if(isValidFormat(response)) {
             QByteArray temp = response.right(response.size() - 5);
             temp.truncate(temp.size() - 3);
-            qlonglong totalEnergy =  temp.toLongLong();
-            qDebug() << "result: " << totalEnergy;
-
+            responseList.at(0)->setValue(temp);
 
             QJsonObject  recordObject;
-            recordObject.insert("TotalEnergy", QJsonValue::fromVariant(totalEnergy));
+            foreach (auto entry, responseList) {
+                recordObject.insert(entry->getJsonKey(), entry->getJsonValue());
+            }
             QJsonDocument doc(recordObject);
             return(doc.toJson());
         } else {

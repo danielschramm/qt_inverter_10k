@@ -15,7 +15,7 @@ public:
     int mqttServerPort=1883;
     QString mqttServerPass="";
     QString mqttServerUser="";
-    QString mqttTopic="";
+    QString deviceName="";
     QString protocol="";
 
     QString serialServerName="";
@@ -62,7 +62,7 @@ public:
             configOptions.mqttServerPort = jsonObj["mqttServerPort"].toInt();
             configOptions.mqttServerPass = jsonObj["mqttServerPass"].toString();
             configOptions.mqttServerUser = jsonObj["mqttServerUser"].toString();
-            configOptions.mqttTopic = jsonObj["mqttTopic"].toString();
+            configOptions.deviceName = jsonObj["deviceName"].toString();
             configOptions.protocol = jsonObj["protocol"].toString();
             configOptions.serialServerName = jsonObj["serialServerName"].toString();
             configOptions.serialServerPort = jsonObj["serialServerPort"].toInt();

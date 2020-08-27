@@ -7,6 +7,9 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <icmdquery.h>
+#include <response_double.h>
+#include <response_enum.h>
+#include <response_longlong.h>
 
 class P17QueryPowerStatus : public iCmdQuery
 {
@@ -26,7 +29,7 @@ private:
     }
 
 public:
-    P17QueryPowerStatus() {
+    P17QueryPowerStatus(QString devName) : iCmdQuery("PowerStatus", devName) {
 
     }
 
@@ -34,9 +37,6 @@ public:
         return("^P003PS\r");
     }
 
-    virtual QByteArray getTopic() {
-        return("/PowerStatus");
-    }
 
     virtual QByteArray resultToJson(QByteArray response) {
         if(isValidFormat(response)) {

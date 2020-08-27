@@ -56,6 +56,7 @@ int main(int argc, char *argv[])
     // This will cause the application to exit when
     // the task signals finished.
     QObject::connect(mainInverter, SIGNAL(finished()), &a, SLOT(quit()));
+    QObject::connect(mainInverter, SIGNAL(mqttConnected()), cmdTask, SLOT(onMqttConnect()));
 
     int result = a.exec();
 

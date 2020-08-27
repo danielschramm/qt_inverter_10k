@@ -40,7 +40,7 @@ public:
         //cmdTimer->start(15000);
         cmdTimer->start(configOptions.waittime);
 
-        baseTopic=configOptions.mqttTopic;
+        baseTopic=configOptions.deviceName;
         if(QString::compare(configOptions.protocol,"p18", Qt::CaseInsensitive) == 0) {
             p18protocol=true;
         } else {
@@ -48,19 +48,18 @@ public:
         }
 
         if(p18protocol) {
-            cmdList.append(new P18QueryGeneralStatus);
-            cmdList.append(new P18QueryTotalEnergy);
-            cmdList.append(new P18QueryEnergyYear);
-            cmdList.append(new P18QueryEnergyMonth);
-            cmdList.append(new P18QueryWorkingMode);
+            cmdList.append(new P18QueryGeneralStatus(configOptions.deviceName));
+            cmdList.append(new P18QueryTotalEnergy(configOptions.deviceName));
+            cmdList.append(new P18QueryEnergyYear(configOptions.deviceName));
+            cmdList.append(new P18QueryEnergyMonth(configOptions.deviceName));
+            cmdList.append(new P18QueryWorkingMode(configOptions.deviceName));
         } else {
-            cmdList.append(new P17QueryTotalEnergy);
-            cmdList.append(new P17QueryEnergyYear);
-            cmdList.append(new P17QueryPowerStatus);
-            cmdList.append(new P17QueryGeneralStatus);
-            cmdList.append(new P17QueryEmInfo);
+            cmdList.append(new P17QueryTotalEnergy(configOptions.deviceName));
+            cmdList.append(new P17QueryEnergyYear(configOptions.deviceName));
+            cmdList.append(new P17QueryPowerStatus(configOptions.deviceName));
+            cmdList.append(new P17QueryGeneralStatus(configOptions.deviceName));
+            cmdList.append(new P17QueryEmInfo(configOptions.deviceName));
         }
-
     }
 
 public slots:
@@ -70,15 +69,22 @@ public slots:
             currentListIndex=0;
         }
 
-        QByteArray topic = baseTopic.toUtf8();
-        topic.append(cmdList.at(currentListIndex)->getTopic());
         QByteArray payload = cmdList.at(currentListIndex)->resultToJson(
                     tcpRead->executeCommand(
                         cmdList.at(currentListIndex)->getCmd().constData())
                     );
 
-        emit sReceivedData(topic, payload);
+        emit sReceivedData(cmdList.at(currentListIndex)->getStateTopic().toUtf8(), payload);
+    }
 
+    void onMqttConnect() {
+        foreach(auto c , cmdList) {
+            foreach(auto r, c->getResponseList()) {
+//                qDebug() << r->getAutodetectTopic();
+//                qDebug() << r->getAutodetectPalyoad(c->getStateTopic());
+                emit sReceivedData(r->getAutodetectTopic().toUtf8(),  r->getAutodetectPalyoad(c->getStateTopic()));
+            }
+        }
     }
 
 signals:

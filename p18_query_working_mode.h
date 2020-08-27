@@ -1,7 +1,6 @@
 #ifndef P18_QUERY_WORKING_MODE_H
 #define P18_QUERY_WORKING_MODE_H
 
-
 #include <QString>
 #include <QByteArray>
 #include <QtDebug>
@@ -9,7 +8,6 @@
 #include <QJsonObject>
 #include <icmdquery.h>
 #include "response_enum.h"
-
 
 class P18QueryWorkingMode : public iCmdQuery
 {
@@ -28,10 +26,8 @@ private:
         return result;
     }
 
-    QList<iResponse *> responseList;
-
 public:
-    P18QueryWorkingMode() {
+    P18QueryWorkingMode(QString devName) : iCmdQuery("WorkingMode", devName) {
         QMap <int, QString> enumWorkingMode;
         enumWorkingMode[0]="Power on mode";
         enumWorkingMode[1]="Standby mode";
@@ -39,8 +35,7 @@ public:
         enumWorkingMode[3]="Battery mode";
         enumWorkingMode[4]="Fault mode";
         enumWorkingMode[5]="Hybrid mode(Line mode, Grid mode)";
-
-        responseList.append(new ResposeEnum("WorkingMode", enumWorkingMode));
+        responseList.append(new ResposeEnum(devName, "WorkingMode", enumWorkingMode));
     }
 
     virtual QByteArray getCmd() {
@@ -52,22 +47,13 @@ public:
         return(cmd);
     }
 
-    virtual QByteArray getTopic() {
-        return("/WorkingMode");
-    }
-
     virtual QByteArray resultToJson(QByteArray response) {
         if(isValidFormat(response)) {
             QByteArray temp = response.right(response.size() - 5);
             temp.truncate(temp.size() - 3);
             responseList.at(0)->setValue(temp);
-            /*
-            qlonglong totalEnergy =  temp.toLongLong();
-            qDebug() << "result: " << totalEnergy;
-            */
 
             QJsonObject  recordObject;
-            //recordObject.insert("TotalEnergy", QJsonValue::fromVariant(totalEnergy));
             foreach (auto entry, responseList) {
                 recordObject.insert(entry->getJsonKey(), entry->getJsonValue());
             }
@@ -80,8 +66,6 @@ public:
         }
         return("");
     }
-
-
 };
 
 #endif // P18_QUERY_WORKING_MODE_H

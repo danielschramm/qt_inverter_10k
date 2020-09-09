@@ -38,7 +38,7 @@ Settings for the Serial to Network converter:
 The delimiter is important for the software to read the answer from the inverter.
 
 
-Install QTMQTT on windows:
+Install QTMQTT on windows - run console matching your compile target from Startmenu/QT:
 - qmake -query QT_INSTALL_LIBS
 - mkdir src
 - cd src

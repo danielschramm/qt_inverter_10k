@@ -36,3 +36,15 @@ Settings for the Serial to Network converter:
 - 2400 Baud 8N1
 - Delimiter -> Silent time 1s (5*200ms)
 The delimiter is important for the software to read the answer from the inverter.
+
+
+Install QTMQTT on windows:
+- qmake -query QT_INSTALL_LIBS
+- mkdir src
+- cd src
+- -> checkout correct version to match qt installation from: git://code.qt.io/qt/qtmqtt.git
+- cd qtmqtt
+- qmake
+- gmake
+- gmake install (you may need administrator privileges for this)
+

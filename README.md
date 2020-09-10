@@ -39,6 +39,7 @@ The delimiter is important for the software to read the answer from the inverter
 
 
 Install QTMQTT on windows - run console matching your compile target from Startmenu/QT:
+Strawberry Perl needs to be installed to run the make process.
 - qmake -query QT_INSTALL_LIBS
 - mkdir src
 - cd src

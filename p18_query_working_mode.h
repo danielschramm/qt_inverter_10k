@@ -35,7 +35,7 @@ public:
         enumWorkingMode[3]="Battery mode";
         enumWorkingMode[4]="Fault mode";
         enumWorkingMode[5]="Hybrid mode(Line mode, Grid mode)";
-        responseList.append(new ResposeEnum(devName, "WorkingMode", enumWorkingMode));
+        responseList.append(new ResponseEnum(devName, "WorkingMode", enumWorkingMode));
     }
 
     virtual QByteArray getCmd() {

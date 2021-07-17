@@ -31,35 +31,35 @@ private:
 
 public:
     P17QueryGeneralStatus(QString devName) : iCmdQuery("GeneralStatus", devName) {
-        responseList.append(new ResposeDouble(devName, "solar_input_voltage_1", 10.0, "V"));
-        responseList.append(new ResposeDouble(devName, "solar_input_voltage_2", 10.0, "V"));
-        responseList.append(new ResposeDouble(devName, "solar_input_current_1", 100.0, "A"));
-        responseList.append(new ResposeDouble(devName, "solar_input_current_2", 100.0, "A"));
-        responseList.append(new ResposeDouble(devName, "battery_voltage", 10.0, "V"));
-        responseList.append(new ResposeDouble(devName, "battery_capacity", 1.0, "%", "battery"));
-        responseList.append(new ResposeDouble(devName, "battery_current", 100.0, "A"));
-        responseList.append(new ResposeDouble(devName, "ac_input_voltage_r", 10.0, "V"));
-        responseList.append(new ResposeDouble(devName, "ac_input_voltage_s", 10.0, "V"));
-        responseList.append(new ResposeDouble(devName, "ac_input_voltage_t", 10.0, "V"));
-        responseList.append(new ResposeDouble(devName, "ac_input_frequency", 100.0, "Hz"));
-        responseList.append(new ResposeDouble(devName, "ac_input_current_r", 100.0, "A"));
-        responseList.append(new ResposeDouble(devName, "ac_input_current_s", 100.0, "A"));
-        responseList.append(new ResposeDouble(devName, "ac_input_current_t", 100.0, "A"));
-        responseList.append(new ResposeDouble(devName, "ac_output_voltage_r", 10.0, "V"));
-        responseList.append(new ResposeDouble(devName, "ac_output_voltage_s", 10.0, "V"));
-        responseList.append(new ResposeDouble(devName, "ac_output_voltage_t", 10.0, "V"));
-        responseList.append(new ResposeDouble(devName, "ac_output_frequency", 100.0, "Hz"));
-        responseList.append(new ResposeDouble(devName, "ac_output_current_r", 100.0, "A"));
-        responseList.append(new ResposeDouble(devName, "ac_output_current_s", 100.0, "A"));
-        responseList.append(new ResposeDouble(devName, "ac_output_current_t", 100.0, "A"));
-        responseList.append(new ResposeDouble(devName, "inner_temperature", 1.0, "°C", "temperature"));
-        responseList.append(new ResposeDouble(devName, "component_max_temperature",  1.0, "°C", "temperature"));
-        responseList.append(new ResposeDouble(devName, "external_battery_temperature",  1.0, "°C", "temperature"));
+        responseList.append(new ResponseDouble(devName, "solar_input_voltage_1", 10.0, "V"));
+        responseList.append(new ResponseDouble(devName, "solar_input_voltage_2", 10.0, "V"));
+        responseList.append(new ResponseDouble(devName, "solar_input_current_1", 100.0, "A"));
+        responseList.append(new ResponseDouble(devName, "solar_input_current_2", 100.0, "A"));
+        responseList.append(new ResponseDouble(devName, "battery_voltage", 10.0, "V"));
+        responseList.append(new ResponseDouble(devName, "battery_capacity", 1.0, "%", "battery"));
+        responseList.append(new ResponseDouble(devName, "battery_current", 100.0, "A"));
+        responseList.append(new ResponseDouble(devName, "ac_input_voltage_r", 10.0, "V"));
+        responseList.append(new ResponseDouble(devName, "ac_input_voltage_s", 10.0, "V"));
+        responseList.append(new ResponseDouble(devName, "ac_input_voltage_t", 10.0, "V"));
+        responseList.append(new ResponseDouble(devName, "ac_input_frequency", 100.0, "Hz"));
+        responseList.append(new ResponseDouble(devName, "ac_input_current_r", 100.0, "A"));
+        responseList.append(new ResponseDouble(devName, "ac_input_current_s", 100.0, "A"));
+        responseList.append(new ResponseDouble(devName, "ac_input_current_t", 100.0, "A"));
+        responseList.append(new ResponseDouble(devName, "ac_output_voltage_r", 10.0, "V"));
+        responseList.append(new ResponseDouble(devName, "ac_output_voltage_s", 10.0, "V"));
+        responseList.append(new ResponseDouble(devName, "ac_output_voltage_t", 10.0, "V"));
+        responseList.append(new ResponseDouble(devName, "ac_output_frequency", 100.0, "Hz"));
+        responseList.append(new ResponseDouble(devName, "ac_output_current_r", 100.0, "A"));
+        responseList.append(new ResponseDouble(devName, "ac_output_current_s", 100.0, "A"));
+        responseList.append(new ResponseDouble(devName, "ac_output_current_t", 100.0, "A"));
+        responseList.append(new ResponseDouble(devName, "inner_temperature", 1.0, "°C", "temperature"));
+        responseList.append(new ResponseDouble(devName, "component_max_temperature",  1.0, "°C", "temperature"));
+        responseList.append(new ResponseDouble(devName, "external_battery_temperature",  1.0, "°C", "temperature"));
 
         QMap <int, QString> enumChanged;
         enumChanged[0]="Nothing changed";
         enumChanged[1]="Something changed";
-        responseList.append(new ResposeEnum(devName, "setting_change_bit",enumChanged ));
+        responseList.append(new ResponseEnum(devName, "setting_change_bit",enumChanged ));
     }
 
     virtual QByteArray getCmd() {

@@ -30,12 +30,12 @@ private:
 
 public:
     P17QueryEmInfo(QString devName) : iCmdQuery("EmInfo", devName) {
-        responseList.append(new ResposeDouble(devName, "emInfo_tbd", 1.0, "W"));
-        responseList.append(new ResposeDouble(devName, "emInfo_default_feedin_power", 1.0, "W"));
-        responseList.append(new ResposeDouble(devName, "emInfo_actual_solar_power", 1.0, "W"));
-        responseList.append(new ResposeDouble(devName, "emInfo_actual_feedin_power", 1.0, "W"));
-        responseList.append(new ResposeDouble(devName, "emInfo_actual_reserved_hybrid_power", 1.0, "W"));
-        responseList.append(new ResposeDouble(devName, "emInfo_tbd2", 1.0, "W"));
+        responseList.append(new ResponseDouble(devName, "emInfo_tbd", 1.0, "W"));
+        responseList.append(new ResponseDouble(devName, "emInfo_default_feedin_power", 1.0, "W"));
+        responseList.append(new ResponseDouble(devName, "emInfo_actual_solar_power", 1.0, "W"));
+        responseList.append(new ResponseDouble(devName, "emInfo_actual_feedin_power", 1.0, "W"));
+        responseList.append(new ResponseDouble(devName, "emInfo_actual_reserved_hybrid_power", 1.0, "W"));
+        responseList.append(new ResponseDouble(devName, "emInfo_tbd2", 1.0, "W"));
     }
 
     virtual QByteArray getCmd() {

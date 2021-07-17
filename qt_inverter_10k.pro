@@ -39,6 +39,7 @@ HEADERS += \
     iResponse.h \
     icmdquery.h \
     maininverter.h \
+    p17_cmd_battery_self_test.h \
     p17_query_eminfo.h \
     p17_query_energy_year.h \
     p17_query_general_status.h \
@@ -52,8 +53,10 @@ HEADERS += \
     response_double.h \
     response_enum.h \
     response_longlong.h \
+    response_switch.h \
     tcpread.h
 
 DISTFILES += \
     README.md \
-    config.json
+    config.json \
+    config_privat.json

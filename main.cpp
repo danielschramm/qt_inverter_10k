@@ -1,4 +1,4 @@
-#include "/usr/lib/gcc/x86_64-linux-gnu/9/include/stddef.h"
+//#include "/usr/lib/gcc/x86_64-linux-gnu/9/include/stddef.h"
 #include <QCoreApplication>
 #include <QtCore>
 #include <QObject>
@@ -56,7 +56,8 @@ int main(int argc, char *argv[])
     // This will cause the application to exit when
     // the task signals finished.
     QObject::connect(mainInverter, SIGNAL(finished()), &a, SLOT(quit()));
-    QObject::connect(mainInverter, SIGNAL(mqttConnected()), cmdTask, SLOT(onMqttConnect()));
+    QObject::connect(mainInverter, SIGNAL(mqttConnected(QMqttClient *)),
+                     cmdTask, SLOT(onMqttConnect(QMqttClient *)));
 
     int result = a.exec();
 

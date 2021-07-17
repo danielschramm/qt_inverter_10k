@@ -16,6 +16,7 @@
 #include "p17_query_power_status.h"
 #include "p17_query_general_status.h"
 #include "p17_query_eminfo.h"
+#include "p17_cmd_battery_self_test.h"
 #include "p18_query_general_status_list.h"
 #include "p18_query_total_energy.h"
 #include "p18_query_energy_year.h"
@@ -59,6 +60,7 @@ public:
             cmdList.append(new P17QueryPowerStatus(configOptions.deviceName));
             cmdList.append(new P17QueryGeneralStatus(configOptions.deviceName));
             cmdList.append(new P17QueryEmInfo(configOptions.deviceName));
+            cmdList.append(new P17CmdBatterySelfTest(configOptions.deviceName));
         }
     }
 
@@ -77,12 +79,22 @@ public slots:
         emit sMqttMessage(cmdList.at(currentListIndex)->getStateTopic().toUtf8(), payload, 0, false);
     }
 
-    void onMqttConnect() {
+    void onMqttConnect(QMqttClient *mClient) {
         foreach(auto c , cmdList) {
             foreach(auto r, c->getResponseList()) {
 //                qDebug() << r->getAutodetectTopic();
 //                qDebug() << r->getAutodetectPalyoad(c->getStateTopic());
-                emit sMqttMessage(r->getAutodetectTopic().toUtf8(),  r->getAutodetectPalyoad(c->getStateTopic()), 0, true);
+                if(c->getCommandTopic().length()>0) {
+                    auto subscription = mClient->subscribe(c->getCommandTopic(), 0);
+                    connect(subscription, &QMqttSubscription::messageReceived,
+                            c, &iCmdQuery::updateMessage);
+                }
+                emit sMqttMessage(r->getAutodetectTopic().toUtf8(),
+                                  r->getAutodetectPalyoad(
+                                      c->getStateTopic(),
+                                      c->getAvailTopic(),
+                                      c->getCommandTopic()
+                                      ), 0, true);
             }
         }
     }

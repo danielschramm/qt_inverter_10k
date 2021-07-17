@@ -14,7 +14,7 @@ public:
     virtual QString getJsonKey() = 0;
     virtual QJsonValue getJsonValue() = 0;
     virtual QString getAutodetectTopic() =0;
-    virtual QByteArray getAutodetectPalyoad(QString stateTopic) =0;
+    virtual QByteArray getAutodetectPalyoad(QString stateTopic, QString availTopic, QString commandTopic) =0;
 };
 
 

@@ -8,8 +8,9 @@
 #include <QJsonObject>
 #include <crc.h>
 #include "iResponse.h"
+#include <qmqttmessage.h>
 
-class iCmdQuery
+class iCmdQuery: public QObject
 {
 protected:
     QString cmdName;
@@ -33,6 +34,12 @@ public:
         stateTopic.replace(QRegularExpression("\\s+"), "_");
         return (stateTopic);
     }
+    virtual QString getAvailTopic() {
+        return ("");
+    }
+    virtual QString getCommandTopic() {
+        return ("");
+    }
 
     QString getCommandName() {
         return cmdName;
@@ -40,6 +47,10 @@ public:
 
     QList<iResponse *>& getResponseList() {
         return responseList;
+    }
+
+    virtual void updateMessage(const QMqttMessage &msg) {
+        qDebug() << msg.topic();
     }
 
 };

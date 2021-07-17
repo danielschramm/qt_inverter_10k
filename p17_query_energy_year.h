@@ -52,7 +52,7 @@ public:
         year.setNum(QDate::currentDate().year());
         returnval.append(year);
 
-        returnval.append(genChecksum(returnval));
+        returnval.append(genChecksum(returnval).toUtf8());
 
         returnval.append("\r");
         return(returnval);

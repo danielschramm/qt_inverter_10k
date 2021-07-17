@@ -45,11 +45,15 @@ public slots:
         qDebug() << bytes << " bytes written...";
     }
     void readyRead() {
-        qDebug() << "ignore reading...";
+        //qDebug() << "tcpread: ignore reading...";
     }
 
 
     QByteArray executeCommand(const char *command) {
+
+        if(strlen(command)<2) {
+            return "";
+        }
 
         if(!connectionState) {
             doConnect();

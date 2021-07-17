@@ -35,12 +35,16 @@ public:
         return returnStr;
     }
 
-    virtual QByteArray getAutodetectPalyoad(QString stateTopic) {
+    virtual QByteArray getAutodetectPalyoad(QString stateTopic, QString availTopic, QString commandTopic) {
         QJsonObject  recordObject;
         recordObject.insert("unit_of_measurement", unit);
         recordObject.insert("name",  devName + " " + valueName);
         recordObject.insert("unique_id", devName + "_" + valueName);
         recordObject.insert("state_topic", stateTopic);
+        if(availTopic.length()>0) {
+            recordObject.insert("availability_topic", availTopic);
+        }
+
         QString valueTemplate="{{ value_json.";
         valueTemplate.append(getJsonKey());
         valueTemplate.append("}}");

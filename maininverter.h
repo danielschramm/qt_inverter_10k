@@ -43,13 +43,13 @@ public:
 
 signals:
     void finished();
-    void mqttConnected();
+    void mqttConnected(QMqttClient *mClient);
 
 public slots:
     void onConnected() {
         qDebug() << "Connected to mqtt broker ";
         statusConnected=true;
-        emit mqttConnected();
+        emit mqttConnected(m_client);
     }
 
     void onDisconnected() {

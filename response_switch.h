@@ -1,54 +1,61 @@
-#ifndef RESPONSE_ENUM_H
-#define RESPONSE_ENUM_H
+#ifndef RESPONSE_SWITCH_H
+#define RESPONSE_SWITCH_H
 
 #include "iResponse.h"
-#include <QMap>
 
-class ResponseEnum :public iResponse {
+
+class ResponseSwitch :public iResponse {
 private:
     QString devName;
     QString valueName;
-    QMap <int, QString> enumeration;
-    int value=0;
+    bool value=0;
+    QString deviceClass;
 public:
-    ResponseEnum(const QString devName, const QString valueName, QMap <int, QString> &enumeration) :
+    ResponseSwitch(const QString devName, const QString valueName, QString deviceClass="") :
         devName(devName),
         valueName(valueName),
-        enumeration(enumeration) {
-
+        deviceClass(deviceClass) {
     }
 
     virtual void setValue(QByteArray newValue) {
-        value = newValue.toLongLong();
+        value = newValue.toLongLong() > 0;
     }
 
     virtual QString getJsonKey() {
         return devName + "_" + valueName;
     }
 
+    virtual QString getUnit() {
+        return "";
+    }
+
     virtual QJsonValue getJsonValue() {
-        return enumeration[value];
+        return static_cast<double>(value);
     }
 
     virtual QString getAutodetectTopic() {
-        QString returnStr="homeassistant/sensor/" + devName + "/" + getJsonKey() + "/config";
+        QString returnStr="homeassistant/switch/" + devName + "/" + getJsonKey() + "/config";
         returnStr.replace(QRegularExpression("\\s+"), "_");
         return returnStr;
     }
 
-    virtual QByteArray getAutodetectPalyoad(QString stateTopic, QString availTopic, QString commandTopic) {
+    virtual QByteArray getAutodetectPalyoad(
+            QString stateTopic, QString availTopic, QString commandTopic) {
         QJsonObject  recordObject;
-        recordObject.insert("name",  devName + " " + valueName);
+        recordObject.insert("name", devName + " " + valueName);
         recordObject.insert("unique_id", devName + "_" + valueName);
         recordObject.insert("state_topic", stateTopic);
+
+        if(commandTopic.length()>0) {
+            recordObject.insert("command_topic", commandTopic);
+        }
         if(availTopic.length()>0) {
             recordObject.insert("availability_topic", availTopic);
         }
 
-        QString valueTemplate="{{ value_json.";
-        valueTemplate.append(getJsonKey());
-        valueTemplate.append("}}");
-        recordObject.insert("value_template", valueTemplate);
+        if(deviceClass.length()>0) {
+            recordObject.insert("device_class", deviceClass);
+        }
 
         QJsonObject deviceObject;
         deviceObject.insert("name", devName);
@@ -61,7 +68,7 @@ public:
         QJsonDocument doc(recordObject);
         return(doc.toJson());
     }
+
 };
 
-
-#endif // RESPONSE_ENUM_H
+#endif // RESPONSE_SWITCH_H

@@ -169,7 +169,7 @@ public:
             QJsonDocument doc(recordObject);
             return(doc.toJson());
         } else {
-            qDebug() << "wrong Format";
+            qDebug() << "PowerStatus: wrong Format";
             return("");
         }
         return("");

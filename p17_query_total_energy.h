@@ -50,7 +50,7 @@ public:
             QJsonDocument doc(recordObject);
             return(doc.toJson());
         } else {
-            qDebug() << "wrong Format";
+            qDebug() << "TotalEnergy: wrong Format";
             return("");
         }
         return("");

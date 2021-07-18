@@ -30,6 +30,7 @@ private:
     }
 
     bool doSend = false;
+    bool awaitResponse = false;
 
 public:
 
@@ -52,27 +53,31 @@ public:
         if(doSend) {
             qDebug() << "BatteryTest acivated.";
             doSend=false;
+            awaitResponse = true;
             return("^S004BST\r");
         } else {
+            awaitResponse = false;
             return("");
         }
     }
 
     virtual QByteArray resultToJson(QByteArray response) {
-        if(isValidFormat(response)) {
-            QByteArray temp = response.right(response.size() - 5);
-            temp.truncate(temp.size() - 3);
-            responseList.at(0)->setValue(temp);
+        if(awaitResponse) {
+            if(isValidFormat(response)) {
+                QByteArray temp = response.right(response.size() - 5);
+                temp.truncate(temp.size() - 3);
+                responseList.at(0)->setValue(temp);
 
-            QJsonObject  recordObject;
-            foreach (auto entry, responseList) {
-                recordObject.insert(entry->getJsonKey(), entry->getJsonValue());
+                QJsonObject  recordObject;
+                foreach (auto entry, responseList) {
+                    recordObject.insert(entry->getJsonKey(), entry->getJsonValue());
+                }
+                QJsonDocument doc(recordObject);
+                return(doc.toJson());
+            } else {
+                qDebug() << "BatterySelfTest: wrong Format";
+                return("");
             }
-            QJsonDocument doc(recordObject);
-            return(doc.toJson());
-        } else {
-            qDebug() << "wrong Format xxxx";
-            return("");
         }
         return("");
     }

@@ -85,7 +85,7 @@ public:
             QJsonDocument doc(recordObject);
             return(doc.toJson());
         } else {
-            qDebug() << "wrong Format";
+            qDebug() << "GeneralStatus: wrong Format";
             return("");
         }
         return("");

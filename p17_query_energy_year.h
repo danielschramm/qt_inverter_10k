@@ -71,7 +71,7 @@ public:
             QJsonDocument doc(recordObject);
             return(doc.toJson());
         } else {
-            qDebug() << "wrong Format";
+            qDebug() << "EnergyYear: wrong Format";
             return("");
         }
         return("");

@@ -15,6 +15,7 @@ Currently the following P17 commands are implemented:
 - ^P003ET (Total Energy generated)
 - ^P003PS (Power Status)
 - ^P003GS (General Status)
+- ^S004BST (Battery Self Test = StartPylontech Battery manually) as switch
 
 Currently the following P18 commands are implemented:
 - ^P005GS (General Status)
@@ -36,6 +37,11 @@ Settings for the Serial to Network converter:
 - 2400 Baud 8N1
 - Delimiter -> Silent time 1s (5*200ms)
 The delimiter is important for the software to read the answer from the inverter.
+
+
+To use the ^S004BST (Battery Self Test) the following conditions are needed:
+- Enable the config option "Activate Li-Fe Battery while commissioning"
+- If charging from grid is disabled you need enough solar power to run the self test. 
 
 
 Install QTMQTT on windows - run console matching your compile target from Startmenu/QT:
